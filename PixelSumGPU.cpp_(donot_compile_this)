@@ -1,0 +1,53 @@
+#include <stdio.h>
+
+
+__global__ void computeIntegralImagesCuda(unsigned char * image, int * integralImage, int * nonZeroCountIntegralImage)
+{
+  
+    // Calculate the unique thread ID.
+    int threadID = blockIdx.x * blockDim.x + threadIdx.x;
+
+    // block code to compute integral or cumulative sum - Workload for each thread based on the threadId
+    for (...) 
+    integralImage[threadIDIndex] = image[threadIDIndex-1] + integralImage[threadIDIndex]; // Just a rough code implementation. Not correct code.
+}
+
+PixelSum::PixelSum(const unsigned char* buffer, int xWidth, int xHeight) {
+    int N = xWidth * xHeight; // Number of elements in each vector
+
+    int size = N * sizeof (int); // The total number of bytes per buffer
+    
+    // Allocate memory
+    cudaMallocManaged(&image, size);
+    cudaMallocManaged(&integralImage, size);
+    cudaMallocManaged(&nonZeroCountIntegralImage, size);
+
+    // Initialize memory
+    image = const_cast<unsigned char*>(buffer);
+    for( int i = 0; i < N; ++i )
+    {
+        nonZeroCountIntegralImage[i] = 0;
+        integralImage[i] = 0;
+    }
+
+
+    Width = xWidth;
+    Height = xHeight;
+    // Setup the launch configuration 
+    int threadsperblock = 128;
+    int blocks = (N / threads_per_block) + 1;
+
+    // Call the kernel 
+    computeIntegralImagesCuda <<< blocks ,threadsperblock >>> ( image, integralImage, nonZeroCountIntegralImage );
+
+    cudaDeviceSynchronize(); // Wait for the GPU to finish
+}
+
+
+PixelSum::~PixelSum() {
+    // Free all allocated memory
+    cudaFree( image ); 
+    cudaFree( integralImage ); 
+    cudaFree( nonZeroCountIntegralImage );
+}
+

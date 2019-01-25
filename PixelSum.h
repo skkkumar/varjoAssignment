@@ -1,8 +1,8 @@
 /*
  * PixelSum.h
  *
- *  Created on: Jan 17, 2019
- *      Author: root
+ *  Created on: Jan 19, 2019
+ *      Author: Sriram
  */
 
 #ifndef PIXELSUM_H_
@@ -15,7 +15,8 @@ private:
 	int Width;
 	int Height;
 	int *integralImage;
-	int *nonZeroIntegralImage;
+	int *nonZeroCountIntegralImage;
+	void computeIntegralImagesThread(int Index, bool directionCheck);
 public:
 	PixelSum(const unsigned char* buffer, int xWidth, int xHeight);
 	PixelSum(const PixelSum&);
@@ -27,6 +28,9 @@ public:
 	int getNonZeroCount(int x0, int y0, int x1, int y1) const;
 	double getNonZeroAverage(int x0, int y0, int x1, int y1) const;
 	void computeIntegralImages();
+	void computeIntegralImages2();
+	void computeIntegralImages3();
+
 };
 
 #endif /* PIXELSUM_H_ */

@@ -1,0 +1,22 @@
+========================================================
+Along with this project the following files are attached
+========================================================
+1) Source files : PixelSum.cpp, PixelSum.h, Main.cpp, Common.h
+2) PixelSumGPU.cpp : A Sample GPU implementation. Please donot compile
+3) Answers to the essay questions
+
+=====================
+How to install.
+=====================
+1) Download the varjo-assignment-Sriram.zip and unzip.
+2) cd varjo-assignment-Sriram/
+3) mkdir build
+4) cd build
+5) cmake ..
+6) make
+
+=====================
+How to run
+=====================
+1) cd build/
+2) ./PixelSum
